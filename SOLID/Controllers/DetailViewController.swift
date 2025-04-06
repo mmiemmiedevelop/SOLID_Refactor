@@ -18,15 +18,27 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         ActivityIndicatorHelper.shared.setUp(in: self.view)
+        setUI()
         bindViewModel()
         viewModel.loadImage(from: passedPiture!.download_url)
-        //줌, 회전기능
+    }
+    
+    private func setUI() {
+        setGesture()
+        setToggle()
+    }
+    
+    // MARK: - 줌, 회전
+    private func setGesture() {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(_:)))
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(pinchGesture)
         imageView.addGestureRecognizer(rotationGesture)
-        //흑백 토글기능
+    }
+    
+    // MARK: - 흑백
+    private func setToggle() {
         colorToggle.addTarget(self, action: #selector(toggleImageColor), for: .valueChanged)
     }
     
