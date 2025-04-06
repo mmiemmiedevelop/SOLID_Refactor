@@ -74,22 +74,8 @@ class DetailViewController: UIViewController {
          if sender.isOn {
              imageView.image = viewModel.originalImage
          } else {
-             imageView.image = applyGrayscaleFilter(to: viewModel.originalImage)
+             imageView.image = viewModel.applyFilter(GrayscaleFilter())
          }
      }
-
-    private func applyGrayscaleFilter(to image: UIImage?) -> UIImage? {//[TODO] vm으로 빼서 다른필터도 쓸수있게 수정 [OCP (개방-폐쇄 원칙)]
-        guard let image = image, let ciImage = CIImage(image: image) else { return nil }
-        
-        let filter = CIFilter(name: "CIPhotoEffectMono")
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        
-        guard let outputImage = filter?.outputImage,
-              let cgImage = CIContext().createCGImage(outputImage, from: outputImage.extent) else {
-            return nil
-        }
-        
-        return UIImage(cgImage: cgImage)
-    }
 
 }

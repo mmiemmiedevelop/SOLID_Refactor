@@ -18,6 +18,7 @@ class DetailViewModel {
     var onDataUpdated: (() -> Void)?
     var onLoading: ((Bool) -> Void)?
     var onError: ((String) -> Void)?
+    private let filterManager = ImageFilterManager()
     
     func loadImage(from urlString: String) {
         onLoading?(true)
@@ -39,5 +40,10 @@ class DetailViewModel {
         }
         task.resume()
     }
+    
+    func applyFilter(_ filter: ImageFilter) -> UIImage? {
+          filterManager.setFilter(filter)
+          return filterManager.applyFilter(to: originalImage)
+      }
     
 }
