@@ -42,15 +42,19 @@ class DetailViewController: UIViewController {
         colorToggle.addTarget(self, action: #selector(toggleImageColor), for: .valueChanged)
     }
     
+    private func runOnMain(_ block: @escaping () -> Void) {
+        DispatchQueue.main.async(execute: block)
+    }
+    
     private func bindViewModel() {
         viewModel.onDataUpdated = { [weak self] in
-            DispatchQueue.main.async {
+            self?.runOnMain {
                 self?.imageView.image = self?.viewModel.originalImage
             }
         }
         
         viewModel.onLoading = { [weak self] isLoading in
-            DispatchQueue.main.async {
+            self?.runOnMain {
                 if let view = self?.view {
                     isLoading ? ActivityIndicatorHelper.shared.show() : ActivityIndicatorHelper.shared.hide()
                 }
@@ -58,8 +62,10 @@ class DetailViewController: UIViewController {
         }
         
         viewModel.onError = { [weak self] errorMsg in
-            guard let self = self else { return }
-            ErrorAlert.show(in: self, message: errorMsg)
+            self?.runOnMain {
+                guard let self = self else { return }
+                ErrorAlert.show(in: self, message: errorMsg)
+            }
         }
     }
     
