@@ -7,9 +7,20 @@
 import UIKit
 import CoreImage
 
-class DetailViewModel {
+protocol DetailViewModelProtocol {
+    var onDataUpdated: (() -> Void)? { get set }
+    var onLoading: ((Bool) -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
+
+    var originalImage: UIImage? { get }
+    func loadImage(from url: String)
+    func applyFilter(_ filter: ImageFilter) -> UIImage?
+}
+
+
+class DetailViewModel: DetailViewModelProtocol {
     
-    var originalImage: UIImage! {
+    var originalImage: UIImage? {
         didSet {
             onDataUpdated?()
         }

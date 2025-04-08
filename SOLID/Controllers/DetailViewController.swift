@@ -11,7 +11,7 @@ import CoreImage
 class DetailViewController: UIViewController {
     
     var passedPiture: Picture?
-    var viewModel = DetailViewModel()
+    var viewModel: DetailViewModelProtocol!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var colorToggle: UISwitch!
     
