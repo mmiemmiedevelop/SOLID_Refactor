@@ -11,7 +11,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchTextField: UITextField!
-    var viewModel = ViewModel()
+    var viewModel: ViewModelProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()

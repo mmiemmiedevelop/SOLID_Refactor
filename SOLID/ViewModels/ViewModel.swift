@@ -7,7 +7,19 @@
 
 import Foundation
 
-class ViewModel {
+protocol ViewModelProtocol {
+    var pitures: [Picture] { get }
+    var filteredPictures: [Picture] { get }
+    var onDataUpdated: (() -> Void)? { get set }
+    var onLoading: ((Bool) -> Void)? { get set }
+    var onError: ((String) -> Void)? { get set }
+    var searchText: String { get set }
+    
+    func fetchPictureList()
+    func filterPictures()
+}
+
+class ViewModel: ViewModelProtocol {
     
     var pitures: [Picture] = [] {
         didSet {
